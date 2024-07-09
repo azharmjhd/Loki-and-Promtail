@@ -1,0 +1,136 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://localhost:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: mysql_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: mysql
+          __path__: /var/log/mysql/mariadb-error.log
+          stream: stdout
+
+  - job_name: mariadb_slow_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: mysql
+          __path__: /var/log/mysql/mariadb-slow.log
+          stream: stdout
+
+  - job_name: varlogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*.log
+          stream: stdout
+
+- job_name: varlogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*.err
+          stream: stderr
+
+  - job_name: syslogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslogs
+          __path__: /var/log/syslog
+          stream: stdout
+
+  - job_name: syslogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: syslogs
+          __path__: /var/log/syslog
+          stream: stderr
+
+  - job_name: kernlogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: kernlogs
+          __path__: /var/log/kern.log
+          stream: stdout
+
+- job_name: kernlogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: kernlogs
+          __path__: /var/log/kern.log
+          stream: stderr
+
+  - job_name: authlogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: authlogs
+          __path__: /var/log/auth.log
+          stream: stdout
+
+  - job_name: authlogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: authlogs
+          __path__: /var/log/auth.log
+          stream: stderr
+
+  - job_name: daemonlogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: daemonlogs
+          __path__: /var/log/daemon.log
+          stream: stdout
+
+- job_name: daemonlogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: daemonlogs
+          __path__: /var/log/daemon.log
+          stream: stderr
+
+  - job_name: dmesglogs_stdout
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: dmesglogs
+          __path__: /var/log/dmesg
+          stream: stdout
+
+  - job_name: dmesglogs_stderr
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: dmesglogs
+          __path__: /var/log/dmesg
+          stream: stderr
